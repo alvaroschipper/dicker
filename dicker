@@ -1,26 +1,22 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3.6
+
+from os import environ
 
 from colorama import init
 
-whale = [
-'              ##          .     ',
-'        ## ## ##         ==     ',
-'     ## ## ## ## ##     ===     ',
-' /"""""""""""""""""\___/ ===    ',
-'{                       / ===-  ',
-' \______ O           __/    ===-',
-'   \    \         __/           ',
-'    \____\_______/              ']
+import whales
 
-whale_color = [
-'\033[0;36m             ##           \033[0;34m.               ',
-'\033[0;36m       ## ## ##          \033[0;34m==               ',
-'\033[0;36m    ## ## ## ## ##      \033[0;34m===               ',
-'\033[0;34m /"""""""""""""""""\___/ ===                        ',
-'\033[0;34m{                       / ===-                      ',
-'\033[0;34m \______ \033[0;37mO           \033[0;34m__/    ===-',
-'\033[0;37m   \    \033[0;34m\         __/                     ',
-'\033[0;37m    \____\033[0;34m\_______/                        ']
+
+def setup():
+    convert = False
+    strip = False
+
+    if 'PYCHARM_HOSTED' in environ:
+        convert = False
+        strip = False
+
+    init(convert=convert, strip=strip)
+
 
 def print_image(image):
     for string in image:
@@ -28,9 +24,10 @@ def print_image(image):
 
 
 def main():
-    init()
-    print_image(whale)
-    print_image(whale_color)
+    setup()
+    print_image(whales.whale)
+    print_image(whales.whale_color)
+
 
 if __name__ == '__main__':
     main()
