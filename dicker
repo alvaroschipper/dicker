@@ -1,21 +1,28 @@
 #!/usr/bin/env python3.6
 
-from os import environ
-
-from colorama import init
-
+import argparse
 import whales
 
 
 def setup():
-    convert = False
-    strip = False
+    parser = argparse.ArgumentParser(description="dicker, cure your bad habit of mistyping docker.")
+    parser.add_argument("-nc", "--no-color", help="disable color output", action="store_false")
+    args = parser.parse_args()
 
-    if 'PYCHARM_HOSTED' in environ:
-        convert = False
-        strip = False
+    if args.no_color:
+        from os import environ
+        from colorama import init
 
-    init(convert=convert, strip=strip)
+        convert = None
+        strip = None
+
+        if 'PYCHARM_HOSTED' in environ:
+            convert = False
+            strip = False
+
+        init(convert=convert, strip=strip)
+
+    return args
 
 
 def print_image(image):
@@ -24,9 +31,11 @@ def print_image(image):
 
 
 def main():
-    setup()
-    print_image(whales.whale)
-    print_image(whales.whale_color)
+    args = setup()
+    if args.no_color:
+        print_image(whales.whale_color)
+    else:
+        print_image(whales.whale)
 
 
 if __name__ == '__main__':
